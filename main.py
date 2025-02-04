@@ -1,5 +1,6 @@
 import unzip
 import os
+import comparePDF
 
 # Get the list of the zip files needed
 def list_files(directory):
@@ -27,6 +28,13 @@ for file in file_list:
 # compile the files
 
 # compare the files
+file_path1 = "./file1.pdf"
+file_path2 = "./file2.pdf"
+res = comparePDF.compare_pdf(file_path1, file_path2)
+if res is True:
+    print("The two PDFs are identical.")
+else:
+    print("The two PDFs are different.")
 
 # remove the unzipped files
 # os.system(f"rm -rf ./tem-unzipped-files")
