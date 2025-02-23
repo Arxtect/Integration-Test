@@ -1,6 +1,7 @@
 import unzip
 import os
 import comparePDF
+from wasmer import engine, Store, Module, Instance
 
 # Get the list of the zip files needed
 def list_files(directory):
@@ -26,6 +27,31 @@ for file in file_list:
         print(f"Skipping {file}")
 
 # compile the files
+# Step 1: Load the WebAssembly module
+# store = Store(engine.Universal())
+# module = Module(store, open("./SwiftLaTeX-arxtect/xetex.wasm", "rb").read())
+
+# Step 2: Create an instance of the module
+# instance = Instance(module)
+
+# Step 3: Define a function to compile LaTeX
+# def compile_latex(tex_file):
+#     # Load the LaTeX source code
+#     with open(tex_file, 'r') as f:
+#         tex_code = f.read()
+    
+#     # Here you would need to interface with the WebAssembly module
+#     # This part depends on how the WASM module is designed
+#     # For example, if the module has a function `compile`:
+    
+#     # Call the WASM function to compile LaTeX
+#     result = instance.exports.compile(tex_code)
+    
+#     return result
+
+# # Step 4: Call the function with your .tex file
+# output = compile_latex("example.tex")
+# print(output)
 
 # compare the files
 file_path1 = "./file1.pdf"
