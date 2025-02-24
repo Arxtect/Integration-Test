@@ -1,5 +1,6 @@
 import unzip
 import os
+import sys
 import comparePDF
 from wasmer import engine, Store, Module, Instance
 
@@ -56,6 +57,16 @@ for file in file_list:
 # compare the files
 file_path1 = "./file1.pdf"
 file_path2 = "./file2.pdf"
+
+mode = "non-stop"
+if len(sys.argv) > 1:
+    mode = sys.argv[1]
+
+# if mode == "non-stop":
+    # go through the whole directory and compare all files
+# else mode == "stop":
+    # stop when the first difference is found
+    
 res = comparePDF.compare_pdf(file_path1, file_path2)
 if res is True:
     print("The two PDFs are identical.")
