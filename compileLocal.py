@@ -1,10 +1,7 @@
 import subprocess
 import os
 
-def compile_latex(engine, tex_file, output_dir=None):
-    # 确定输出目录
-    if output_dir is None:
-        output_dir = os.path.dirname(tex_file)
+def compile_latex(engine, tex_file, output_dir='./local_results'):
     
     # 确定输出 PDF 文件名
     pdf_file = os.path.splitext(os.path.basename(tex_file))[0] + '_local.pdf'
@@ -15,6 +12,10 @@ def compile_latex(engine, tex_file, output_dir=None):
     # 如果输出目录不存在，则创建它
     if not os.path.exists(output_dir):
             os.makedirs(output_dir)
+
+    if not os.path.exists(tex_file):
+        print(f"Error: {tex_file} not found.")
+        return
 
     # 调用本地 LaTeX 引擎编译 LaTeX 文件
     try:
