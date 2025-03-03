@@ -27,6 +27,7 @@ parser.add_argument('--engine', type=str, default='xelatex', help='LaTeX engine 
 args = parser.parse_args()
 # make sure we are in the right directory
 os.system("cd /Users/zhengbowen/nondefault/Intern/Arxtext")
+clear.clear()
 
 ## define the directory and the unzip directory
 mode = args.mode
@@ -71,6 +72,3 @@ for result in result_list:
     if res is False:
         if mode == "stop":
             break
-
-# remove the unzipped files
-# clear.clear()
