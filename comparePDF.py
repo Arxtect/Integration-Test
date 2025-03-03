@@ -5,7 +5,14 @@ import numpy as np
 def compare_images(img1, img2):
     return np.array_equal(img1, img2)
 
-
+def check_pdf(pdf_name, pdf_pyth, compile_type ):
+    if pdf_name == "":
+        with open("comparePDF.log", "a") as f:
+            f.write("For " + pdf_pyth + "\n")
+            f.write("The " + compile_type + "compiled PDF do not compile successfully.\n")
+            f.write("\n")
+        return False
+    return True
 
 # if pdf identical, return True; else, return False
 def compare_pdf(pdf_path1, pdf_path2):
@@ -33,7 +40,7 @@ def compare_pdf(pdf_path1, pdf_path2):
                 flag = False
             
     if flag is False:
-        with open("comparePDF.log", "w") as f:
+        with open("comparePDF.log", "a") as f:
             f.write("For " + pdf_path1 + " and " + pdf_path2 + "\n")
             f.write(err1)
             f.write("\n")
@@ -41,7 +48,8 @@ def compare_pdf(pdf_path1, pdf_path2):
                 f.write(err)
                 f.write("\n")
         return False
-    with open("comparePDF.log", "w") as f:
-        f.write("For" + pdf_path1 + "and" + pdf_path2)
-        f.write("The two PDFs are identical.")
+    with open("comparePDF.log", "a") as f:
+        f.write("For " + pdf_path1 + " and " + pdf_path2 + "\n")
+        f.write("The two PDFs are identical.\n")
+        f.write("\n")
     return True

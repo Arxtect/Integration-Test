@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-def compile_latex(engine, tex_file, output_dir='./local_results'):
+def compile_latex(engine, tex_file, output_dir='./Results'):
     
     # 确定输出 PDF 文件名
     pdf_file = os.path.splitext(os.path.basename(tex_file))[0] + '_local.pdf'
@@ -28,4 +28,4 @@ def compile_latex(engine, tex_file, output_dir='./local_results'):
         print(f"Failed to compile PDF. Error: {e}")
 
 # 调用函数编译 LaTeX 文件到 PDF
-compile_latex("xelatex", './tem-unzipped-files/test2', './local_results')
+compile_latex("xelatex", './tem-unzipped-files/test2')

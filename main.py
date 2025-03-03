@@ -1,7 +1,7 @@
 import os
 import sys
 import argparse
-import comparePDF, compileLocal, unzip, clear
+import comparePDF, compileLocal, unzip, clear, compileWeb
 from wasmer import engine, Store, Module, Instance
 
 # Get the list of the zip files needed
@@ -14,9 +14,10 @@ def list_files(directory):
 
 def list_directories(directory):
     dir_list = []
-    for root, dirs, files in os.walk(directory):
-        for dir in dirs:
-            dir_list.append(os.path.join(root, dir))
+    for entry in os.listdir(directory):
+        full_path = os.path.join(directory, entry)
+        if os.path.isdir(full_path):
+            dir_list.append(full_path)
     return dir_list
 
 # parameters
@@ -47,21 +48,29 @@ dirs = list_directories(unzip_dir)
 # compile the files locally
 for dir in dirs:
     compileLocal.compile_latex(engine, dir)
+    compileWeb.compile_latex(engine, dir)
 
 # compare the files
-file_path1 = "./file1.pdf"
-file_path2 = "./file2.pdf"
-
-# if mode == "non-stop":
-    # go through the whole directory and compare all files
-# else mode == "stop":
-    # stop when the first difference is found
-
-res = comparePDF.compare_pdf(file_path1, file_path2)
-if res is True:
-    print("The two PDFs are identical.")
-else:
-    print("The two PDFs are different.")
+result_list = list_directories("./Results")
+for result in result_list:
+    file_list = list_files(result)
+    file_path1 = ""
+    file_path2 = ""
+    for file in file_list:
+        if file.endswith("_local.pdf"):
+            file_path1 = file
+        elif file.endswith("_web.pdf"):
+            file_path2 = file
+        else:
+            print(f"Skipping {file}")
+    if file_path1 == "" or file_path2 == "":
+        comparePDF.check_pdf(file_path1, result, "local")
+        comparePDF.check_pdf(file_path2, result, "web")
+        continue # error message 
+    res = comparePDF.compare_pdf(file_path1, file_path2)
+    if res is False:
+        if mode == "stop":
+            break
 
 # remove the unzipped files
 # clear.clear()
